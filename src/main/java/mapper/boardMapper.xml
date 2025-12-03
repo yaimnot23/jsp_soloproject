@@ -2,5 +2,46 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+	<select id="list" resultType="domain.RoomVO" parameterType="map">
+		SELECT * FROM room
+		<where>
+			<if test="status != null and status != '' and status != 'all'">
+				room_status = #{status}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND room_num LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+		ORDER BY rno DESC
+	</select>
+	
+	<insert id="add" parameterType="domain.RoomVO">
+        INSERT INTO room (room_num, room_type, price, content, image_file)
+        VALUES (#{roomNum}, #{roomType}, #{price}, #{content}, #{imageFile})
+    </insert>
     
-    <mapper namespace="boardMapper"></mapper>
+    <select id="detail" resultType="domain.RoomVO">
+		SELECT * FROM room WHERE rno = #{rno}
+	</select>
+	
+	<update id="mod" parameterType="domain.RoomVO">
+		UPDATE room SET 
+		room_num = #{roomNum}, 
+		room_type = #{roomType}, 
+		price = #{price}, 
+		content = #{content},
+		room_status = #{roomStatus},
+		image_file = #{imageFile}
+		WHERE rno = #{rno}
+	</update>
+	
+	<update id="status" parameterType="domain.RoomVO">
+		UPDATE room SET room_status = #{roomStatus} WHERE rno = #{rno}
+	</update>
+	
+	<delete id="del">
+		DELETE FROM room WHERE rno = #{rno}
+	</delete>
+</mapper>
