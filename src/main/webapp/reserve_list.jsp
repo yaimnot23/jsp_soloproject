@@ -14,7 +14,7 @@
 
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>📋 예약 현황 리스트</h1>
+            <h1>예약 현황 리스트</h1>
             <a href="/brd/list" class="btn btn-outline-dark rounded-0">객실 목록으로</a>
         </div>
         

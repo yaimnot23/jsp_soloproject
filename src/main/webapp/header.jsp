@@ -20,10 +20,13 @@
         <li class="nav-item">
           <a class="nav-link" href="/brd/list">Rooms</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/rsv/list">Reservations</a>
-        </li>
         
+        <c:if test="${not empty ses.id}">
+            <li class="nav-item">
+              <a class="nav-link" href="/rsv/list">Reservations</a>
+            </li>
+        </c:if>
+
         <c:if test="${not empty ses.id}">
             <li class="nav-item">
                 <a class="nav-link" href="/dash/main">Dashboard</a>

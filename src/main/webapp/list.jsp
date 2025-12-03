@@ -25,10 +25,10 @@
                 </select>
                 
                 <input type="text" name="keyword" class="form-control" placeholder="방 번호 검색" value="${param.keyword}">
-                <button type="submit" class="btn btn-secondary">검색</button>
+                <button type="submit" class="btn btn-dark text-nowrap">검색</button>
             </form>
 
-            <a href="/brd/register" class="btn btn-primary text-white">➕ 객실 등록하기</a>
+            <a href="/brd/register" class="btn btn-primary text-white">객실 등록하기</a>
         </div>
         
         <table class="table table-hover align-middle shadow-sm">
