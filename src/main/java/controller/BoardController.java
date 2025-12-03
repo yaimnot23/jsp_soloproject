@@ -20,6 +20,10 @@ import domain.RoomVO;
 import service.BoardService;
 import service.BoardServiceImpl;
 
+import service.CommentService;
+import service.CommentServiceImpl;
+import domain.CommentVO;
+
 @WebServlet("/brd/*")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 1,  // 1MB
@@ -28,8 +32,10 @@ import service.BoardServiceImpl;
 )
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// 여기 이름을 logger에서 log로 통일했습니다.
+
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
+	
+	private CommentService csv;
 	
 	private RequestDispatcher rdp;
 	private String destPage;
@@ -37,6 +43,7 @@ public class BoardController extends HttpServlet {
        
     public BoardController() {
         bsv = new BoardServiceImpl();
+        csv = new CommentServiceImpl();
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,18 +71,27 @@ public class BoardController extends HttpServlet {
 				// 2. 파라미터 받기
 				String roomNum = request.getParameter("roomNum");
 				String roomType = request.getParameter("roomType");
-				// 숫자 변환 시 공백이나 null 체크가 필요할 수 있으나 일단 진행
 				int price = Integer.parseInt(request.getParameter("price"));
 				String content = request.getParameter("content");
 
-				// 3. 파일 처리
+				// 3. 파일 처리 (핵심 수정 부분)
 				Part filePart = request.getPart("imageFile");
 				String fileName = getFileName(filePart);
 				
 				if (fileName != null && !fileName.isEmpty()) {
+					// 사용자가 사진을 올렸으면 그 사진 저장
 					filePart.write(savePath + File.separator + fileName);
 				} else {
-					fileName = "default.jpg";
+					// 사진을 안 올렸으면 방 타입에 따라 기본 이미지 배정
+					if("Standard".equals(roomType)) {
+						fileName = "default_standard.jpg";
+					} else if("Deluxe".equals(roomType)) {
+						fileName = "default_deluxe.jpg";
+					} else if("Royal Suite".equals(roomType)) {
+						fileName = "default_royal.jpg";
+					} else {
+						fileName = "default.jpg"; // 예비용
+					}
 				}
 
 				// 4. DB 저장
@@ -92,16 +108,20 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "list":
-			log.info(">>> 리스트 진입");
-			// 1. 화면에서 보낸 검색어 받기
+			// 1. 파라미터 받기 (페이지 번호, 검색어)
 			String status = request.getParameter("status");
 			String keyword = request.getParameter("keyword");
+			String pageNoStr = request.getParameter("pageNo");
 			
-			// 2. DB에서 검색 결과 가져오기
-			List<RoomVO> list = bsv.getList(status, keyword);
+			// 페이지 번호가 없으면 1페이지로 설정
+			int pageNo = (pageNoStr == null || pageNoStr.isEmpty()) ? 1 : Integer.parseInt(pageNoStr);
 			
-			// 3. 화면으로 데이터 보내기
-			request.setAttribute("list", list);
+			// 2. 서비스 호출 (PagingHandler를 통째로 받아옴)
+			// PagingHandler 안에는 list와 페이징 계산 정보가 다 들어있음
+			handler.PagingHandler ph = bsv.getList(status, keyword, pageNo);
+			
+			// 3. 화면으로 보내기
+			request.setAttribute("ph", ph); // "list" 대신 "ph"를 보냄
 			
 			destPage = "/list.jsp";
 			break;
@@ -113,6 +133,10 @@ public class BoardController extends HttpServlet {
 			RoomVO rvo = bsv.getDetail(rno);
 			// 3. 화면으로 보내기
 			request.setAttribute("rvo", rvo);
+			
+			List<CommentVO> cList = csv.getList(rno);
+			request.setAttribute("cList", cList);
+			
 			destPage = "/detail.jsp";
 			break;
 			

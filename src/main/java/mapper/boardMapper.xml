@@ -5,17 +5,18 @@
 
 <mapper namespace="boardMapper">
 	<select id="list" resultType="domain.RoomVO" parameterType="map">
-		SELECT * FROM room
-		<where>
-			<if test="status != null and status != '' and status != 'all'">
-				room_status = #{status}
-			</if>
-			<if test="keyword != null and keyword != ''">
-				AND room_num LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-		</where>
-		ORDER BY rno DESC
-	</select>
+        SELECT * FROM room
+        <where>
+            <if test="status != null and status != '' and status != 'all'">
+                room_status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND room_num LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+        ORDER BY rno DESC
+        LIMIT #{pageStart}, #{qty}
+    </select>
 	
 	<insert id="add" parameterType="domain.RoomVO">
         INSERT INTO room (room_num, room_type, price, content, image_file)
@@ -44,4 +45,17 @@
 	<delete id="del">
 		DELETE FROM room WHERE rno = #{rno}
 	</delete>
+	
+	<select id="cnt" resultType="int" parameterType="map">
+        SELECT count(*) FROM room
+        <where>
+            <if test="status != null and status != '' and status != 'all'">
+                room_status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND room_num LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+    </select>
+    
 </mapper>

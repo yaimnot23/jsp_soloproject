@@ -5,9 +5,12 @@ import domain.RoomVO;
 
 public interface BoardDAO {
 	int insert(RoomVO rvo);
-	List<RoomVO> selectList(String status, String keyword);
+	// 페이징 정보(pageStart, qty) 포함
+	List<RoomVO> selectList(String status, String keyword, int pageStart, int qty);
+	// 전체 데이터 개수 구하기
+	int getTotalCount(String status, String keyword);
 	RoomVO selectOne(int rno);
 	int update(RoomVO rvo);
-	int delete(int rno);
 	int updateStatus(RoomVO rvo);
+	int delete(int rno);
 }

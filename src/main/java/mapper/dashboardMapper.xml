@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- dashboard를 만들기 위한 개수 및 계산을 위한 쿼리(관리자용) -->
+    
+<mapper namespace="dashMapper">
+    <select id="totalRoom" resultType="int">
+        SELECT count(*) FROM room
+    </select>
+    
+    <select id="countStatus" parameterType="string" resultType="int">
+        SELECT count(*) FROM room WHERE room_status = #{status}
+    </select>
+    
+    <select id="totalRsv" resultType="int">
+        SELECT count(*) FROM reservation
+    </select>
+    
+    <select id="recentComments" resultType="domain.CommentVO">
+        SELECT * FROM comment ORDER BY cno DESC LIMIT 5
+    </select>
+</mapper>
+

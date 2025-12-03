@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+/* 1. 고급스러운 폰트 가져오기 (Playfair Display: 제목용, Noto Sans KR: 본문용) */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* 2. 색상 변수 정의 (조선호텔 스타일: 차콜 + 골드 + 크림) */
+:root {
+    --primary-dark: #1a1a1a;       /* 아주 짙은 차콜 (헤더 배경) */
+    --primary-gold: #9e8a59;       /* 톤다운된 골드 (버튼, 포인트) */
+    --primary-gold-hover: #806e43; /* 버튼 클릭 시 색상 */
+    --bg-cream: #f9f8f5;           /* 배경색 (아주 연한 크림색) */
+    --text-main: #333333;          /* 기본 글자색 */
+    --text-light: #ffffff;         /* 흰색 글자 */
+}
+
+/* 3. 기본 설정 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--bg-cream);
+    color: var(--text-main);
+}
+
+/* 영문 제목에 명조체 적용 */
+h1, h2, h3, .navbar-brand, .hero-title {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.5px;
+}
+
+/* 4. 네비게이션 바 (헤더) 디자인 - !important로 부트스트랩 강제 덮어쓰기 */
+.navbar-custom {
+    background-color: var(--primary-dark) !important; /* 배경색 강제 적용 */
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* 아래쪽 그림자 */
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-light) !important;
+    letter-spacing: 2px;
+}
+
+.nav-link {
+    color: #ffffff !important; 
+    
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-gold) !important; /* 마우스 올리면 골드색 */
+}
+
+/* 5. 버튼 디자인 (골드 테마) */
+.btn-primary {
+    background-color: var(--primary-gold);
+    border-color: var(--primary-gold);
+    border-radius: 0; /* 각진 버튼 (고급스러움) */
+    padding: 10px 25px;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-gold-hover);
+    border-color: var(--primary-gold-hover);
+}
+
+.btn-outline-light {
+    border-radius: 0;
+    padding: 10px 25px;
+    border-width: 1px;
+}
+
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: var(--primary-dark);
+}
+
+/* 6. 테이블 디자인 */
+.table {
+    background-color: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.table thead th {
+    background-color: var(--primary-dark);
+    color: #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+    border: none;
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+.table tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* 7. 카드 (박스) 디자인 */
+.card {
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+/* 8. 배지 (상태 표시) 디자인 */
+.badge {
+    border-radius: 0;
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 6px 10px;
+}
+
+/* 9. 객실 목록 사진 크기 고정 */
+.room-img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+    border-radius: 4px;
+    border: 1px solid #eee;
+}

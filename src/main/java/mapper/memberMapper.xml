@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="memberMapper">
+    <insert id="reg" parameterType="domain.MemberVO">
+        INSERT INTO member (id, pwd, email)
+        VALUES (#{id}, #{pwd}, #{email})
+    </insert>
+
+    <select id="login" resultType="domain.MemberVO" parameterType="domain.MemberVO">
+        SELECT * FROM member WHERE id = #{id} AND pwd = #{pwd}
+    </select>
+</mapper>

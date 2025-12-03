@@ -29,12 +29,21 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<RoomVO> selectList(String status, String keyword) {
-		// 파라미터가 2개라 Map 사용
+	public List<RoomVO> selectList(String status, String keyword, int pageStart, int qty) {
+		Map<String, Object> map = new HashMap<>(); // Object로 변경 (숫자도 들어가니까)
+		map.put("status", status);
+		map.put("keyword", keyword);
+		map.put("pageStart", pageStart);
+		map.put("qty", qty);
+		return sql.selectList(NS + "list", map);
+	}
+	
+	@Override
+	public int getTotalCount(String status, String keyword) {
 		Map<String, String> map = new HashMap<>();
 		map.put("status", status);
 		map.put("keyword", keyword);
-		return sql.selectList(NS + "list", map);
+		return sql.selectOne(NS + "cnt", map);
 	}
 	
 	@Override

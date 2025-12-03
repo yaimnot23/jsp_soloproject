@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="rsvMapper">
+    <insert id="reg" parameterType="domain.ReservationVO">
+        INSERT INTO reservation (rno, room_num, guest_name, guest_phone, check_in, check_out)
+        VALUES (#{rno}, #{roomNum}, #{guestName}, #{guestPhone}, #{checkIn}, #{checkOut})
+    </insert>
+    
+    <select id="list" resultType="domain.ReservationVO">
+        SELECT * FROM reservation ORDER BY rsv_no DESC
+    </select>
+</mapper>

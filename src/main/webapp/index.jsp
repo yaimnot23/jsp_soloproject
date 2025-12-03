@@ -5,43 +5,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>호텔 관리 시스템</title>
+<title>THE HOTEL - Management</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    /* 배경 이미지나 스타일을 추가하고 싶으면 여기에 작성 */
-    .hero-section {
-        background-color: #f8f9fa;
-        padding: 100px 0;
-        text-align: center;
-        border-radius: 10px;
-        margin-top: 50px;
-    }
-</style>
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 </head>
 <body>
+    <jsp:include page="header.jsp" />
 
-<div class="container">
-    <div class="hero-section">
-        <h1 class="display-4 fw-bold">🏨 호텔 객실 관리 시스템</h1>
-        <p class="lead text-muted mt-3">객실 상태를 확인하고 관리하는 관리자 전용 페이지입니다.</p>
-        
-        <hr class="my-5" style="width: 50%; margin: 0 auto;">
-        
-        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-            <a href="/brd/list" class="btn btn-primary btn-lg px-5 gap-3">
-                📋 객실 목록 보기
-            </a>
+    <div class="container-fluid p-0">
+        <div class="hero-section text-center" 
+             style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+                    background-color: #2c2c2c; 
+                    background-size: cover; 
+                    background-position: center; 
+                    color: white; 
+                    padding: 150px 0;">
             
-            <a href="/brd/register" class="btn btn-outline-secondary btn-lg px-5">
-                ➕ 객실 등록하기
-            </a>
+            <h1 class="hero-title" style="font-family: serif; font-size: 3.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                Timeless Luxury, The Hotel
+            </h1>
+            
+            <p class="lead mb-4" style="font-weight: 300; letter-spacing: 1px; color: #f0f0f0;">
+                품격 있는 휴식을 위한 프리미엄 객실 관리 시스템
+            </p>
+            
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mt-5">
+                <a href="/brd/list" class="btn btn-primary btn-lg px-5 gap-3 rounded-0" style="border: none;">
+                    VIEW ROOMS
+                </a>
+                
+                <c:if test="${not empty ses.id}">
+                    <a href="/brd/register" class="btn btn-outline-light btn-lg px-5 rounded-0" style="border-width: 1px;">
+                        REGISTER ROOM
+                    </a>
+                </c:if>
+            </div>
         </div>
     </div>
     
-    <div class="mt-5 text-center text-secondary">
-        <small>&copy; 2025 Hotel Management System Project</small>
+    <div class="container mt-5 mb-5 text-center">
+        <h3 class="mb-4" style="color: #9e8a59; font-family: serif;">Exceptional Service</h3>
+        <p class="text-muted" style="max-width: 600px; margin: 0 auto;">
+            체계적인 객실 관리와 실시간 상태 모니터링을 통해<br>
+            고객에게 최상의 경험을 제공합니다.
+        </p>
+        <div class="mt-5 text-secondary">
+            <small>&copy; 2025 THE HOTEL. All Rights Reserved.</small>
+        </div>
     </div>
-</div>
-
 </body>
 </html>
